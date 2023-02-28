@@ -1,16 +1,11 @@
-import { TestBed } from '@angular/core/testing';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { TypeOrmCrudService } from '@rewiko/crud-typeorm';
+import { <%= entityName %> } from '../entities/<%= nameFile %>.entity';
 
-import { <%= serviceName %>Service } from './<%= serviceName %>.service';
-
-describe('<%= serviceName %>Service', () => {
-  let service: <%= serviceName %>Service;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(<%= serviceName %>Service);
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-});
+@Injectable()
+export class <%= name %>Service extends TypeOrmCrudService<<%= entityName %>> {
+  constructor(@InjectRepository(<%= entityName %>) repo) {
+    super(repo);
+  }
+}

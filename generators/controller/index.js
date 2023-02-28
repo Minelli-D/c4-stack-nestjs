@@ -23,7 +23,7 @@ module.exports = class extends Generator {
       {
         type: 'input',
         name: 'name',
-        message: 'Hi, give the name of the REST in kebab-case?',
+        message: 'Hi, give the name of the SERVICE in kebab-case?',
       }
     ];
 
@@ -35,15 +35,18 @@ module.exports = class extends Generator {
 
   writing() {
     let name = this.options.name != null ? this.options.name : this.answers.name
+    let entityName = this.options.entityName != null ? this.options.entityName : null
+    let entityId = this.options.entityId != null ? this.options.entityId : null
 
-    const serviceDir = path.join('app', 'src', 'rest');
+    const controllerDir = path.join('app', 'src', 'controller');
 
-    const creationFile = path.join(serviceDir, (name+'-.service.ts'));
+    const creationFile = path.join(controllerDir, (name+'.controller.ts'));
+    const nameFile = name
     name = camel(name)
     this.fs.copyTpl(
-      this.templatePath('service.ts'),
+      this.templatePath('controller.ts'),
       this.destinationPath(creationFile),
-      { name }
+      { nameFile,name,entityName, entityId },
     );
   }
 
